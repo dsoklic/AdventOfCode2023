@@ -1,2 +1,4 @@
 # Ignore all txt files containing puzzle inputs
 **/*.txt
+
+*.py[cod]

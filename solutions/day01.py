@@ -1,6 +1,6 @@
+from utils import readFile
 
-with open('input.txt') as f:
-    lines = f.readlines()
+lines = readFile('inputs/input01.txt')
 
 part1 = 0
 
