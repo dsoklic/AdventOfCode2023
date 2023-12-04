@@ -24,5 +24,11 @@ class Testing(unittest.TestCase):
         _, winners, actual = getCardInfo('Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53')
         self.assertEqual(getScore(winners, actual), 8)
 
+    def test_winning_numbers(self):
+        _, winners, actual = getCardInfo('Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53')
+        matches = getWinningNumbers(winners, actual)
+    
+        self.assertCountEqual(matches, [48, 83, 86, 17])
+
 if __name__ == '__main__':
     unittest.main()

@@ -25,7 +25,15 @@ def getScore(winners, actual) -> int:
             count += 1
 
     return int(2 ** (count-1))
-    
+
+def getWinningNumbers(winners, actual) -> list[int]:
+    matching = []
+
+    for num in winners:
+        if num in actual:
+            matching.append(num)
+
+    return matching
 
 if __name__ == '__main__':
     lines = readFile('inputs/input04.txt')
@@ -35,3 +43,38 @@ if __name__ == '__main__':
         _, winners, actual = getCardInfo(line)
         part1 += getScore(winners, actual)
     print(f"part1 {part1}")
+
+    pipeline = [(x, True) for x in lines]
+    winning_games = []
+
+    game_lookup = {}
+    for line in lines:
+        id, _, _ = getCardInfo(line)
+        game_lookup[id] = line
+
+    i = 0
+    while i < len(pipeline):
+        game, original = pipeline[i]
+
+        if not original:
+            i += 1
+            continue
+
+        id, winners, actual = getCardInfo(game)
+
+        # Get winning numbers
+        matching = getWinningNumbers(winners, actual)
+        if matching:
+            winning_games.append(id)
+            for match in matching:
+                pipeline.append((game_lookup[match], False))
+
+        i += 1
+
+    part2 = 0
+
+    for id in winning_games:
+        _, winning, actual = getCardInfo(game_lookup[id])
+        part2 += getScore(winning, actual)
+    
+    print(f"part2: {part2}")
