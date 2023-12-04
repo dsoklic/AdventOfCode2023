@@ -5,4 +5,7 @@ def readFile(file_path):
         return [line.rstrip() for line in f.readlines()]
     
 def extractNumber(input):
-    return re.search(r"(\d+)", input).group(1)
+    return int(re.search(r"(\d+)", input).group(1))
+
+def extractAllNumbers(input: str) -> list[int]:
+    return [int(x) for x in re.findall(r"(\d+)", input)]
