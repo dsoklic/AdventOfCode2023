@@ -30,5 +30,9 @@ class Testing(unittest.TestCase):
     
         self.assertCountEqual(matches, [48, 83, 86, 17])
 
+    def test_part2(self):
+        res = calculatePart2(self.dummy_input)
+        self.assertEqual(res, 30)
+
 if __name__ == '__main__':
     unittest.main()

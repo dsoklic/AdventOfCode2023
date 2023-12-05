@@ -1,4 +1,5 @@
 from solutions.utils import readFile, extractAllNumbers, extractNumber
+from collections import deque
 
 # Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 # Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
@@ -35,6 +36,24 @@ def getWinningNumbers(winners, actual) -> list[int]:
 
     return matching
 
+def calculatePart2(lines) -> int:
+    pipeline = deque(lines)
+    winning_games = []
+
+    while pipeline:
+        game = pipeline.popleft()
+        id, winners, actual = getCardInfo(game)
+
+        # Get winning numbers
+        matching = getWinningNumbers(winners, actual)
+        if matching:
+            winning_games.append(id)
+
+            for i in range(id, id+len(matching)):
+                pipeline.append(lines[i])
+
+    return len(winning_games)
+
 if __name__ == '__main__':
     lines = readFile('inputs/input04.txt')
 
@@ -44,37 +63,6 @@ if __name__ == '__main__':
         part1 += getScore(winners, actual)
     print(f"part1 {part1}")
 
-    pipeline = [(x, True) for x in lines]
-    winning_games = []
-
-    game_lookup = {}
-    for line in lines:
-        id, _, _ = getCardInfo(line)
-        game_lookup[id] = line
-
-    i = 0
-    while i < len(pipeline):
-        game, original = pipeline[i]
-
-        if not original:
-            i += 1
-            continue
-
-        id, winners, actual = getCardInfo(game)
-
-        # Get winning numbers
-        matching = getWinningNumbers(winners, actual)
-        if matching:
-            winning_games.append(id)
-            for match in matching:
-                pipeline.append((game_lookup[match], False))
-
-        i += 1
-
-    part2 = 0
-
-    for id in winning_games:
-        _, winning, actual = getCardInfo(game_lookup[id])
-        part2 += getScore(winning, actual)
     
+    part2 = calculatePart2(lines)
     print(f"part2: {part2}")
