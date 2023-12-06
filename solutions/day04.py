@@ -38,21 +38,20 @@ def getWinningNumbers(winners, actual) -> list[int]:
 
 def calculatePart2(lines) -> int:
     pipeline = deque(lines)
-    winning_games = []
+    cards = 0
 
     while pipeline:
+        cards += 1
         game = pipeline.popleft()
         id, winners, actual = getCardInfo(game)
 
         # Get winning numbers
         matching = getWinningNumbers(winners, actual)
         if matching:
-            winning_games.append(id)
-
             for i in range(id, id+len(matching)):
                 pipeline.append(lines[i])
 
-    return len(winning_games)
+    return cards
 
 if __name__ == '__main__':
     lines = readFile('inputs/input04.txt')
