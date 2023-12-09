@@ -8,4 +8,4 @@ def extractNumber(input):
     return int(re.search(r"(\d+)", input).group(1))
 
 def extractAllNumbers(input: str) -> list[int]:
-    return [int(x) for x in re.findall(r"(\d+)", input)]
+    return [int(x) for x in re.findall(r"(-?\d+)", input)]
