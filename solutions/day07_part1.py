@@ -28,51 +28,32 @@ def createHand(hand):
 def hasPair(hand):
     counted_hand = createHand(hand)
 
-    if 'J' in hand:
-        pass
-    else:
-        return any([count >= 2 for count in counted_hand.values()])
+    return any([count >= 2 for count in counted_hand.values()])
 
 def hasTwoPairs(hand):
     counted_hand = createHand(hand)
 
-    if 'J' in hand:
-        pass
-    else:
-        return [count >= 2 for count in counted_hand.values()].count(True) >= 2
+    return [count >= 2 for count in counted_hand.values()].count(True) >= 2
 
 def hasThreeOfAKind(hand):
     counted_hand = createHand(hand)
 
-    if 'J' in hand:
-        pass
-    else:
-        return any([count >= 3 for count in counted_hand.values()])
+    return any([count >= 3 for count in counted_hand.values()])
 
 def hasFullHouse(hand):
     counted_hand = createHand(hand)
 
-    if 'J' in hand:
-        pass
-    else:
-        return 3 in counted_hand.values() and 2 in counted_hand.values()
+    return 3 in counted_hand.values() and 2 in counted_hand.values()
 
 def hasFourOfAKind(hand):
     counted_hand = createHand(hand)
 
-    if 'J' in hand:
-        # return max(counted_hand.values()) + counted_hand['J'] == 4
-        pass
-    else:
-        return any([count >= 4 for count in counted_hand.values()])
+    return any([count >= 4 for count in counted_hand.values()])
 
 def hasFiveOfAKind(hand):
     counted_hand = createHand(hand)
 
-    if 'J' in hand:
-        return len(counted_hand.values()) <= 2 and sum(counted_hand.values()) == 5
-    else:
-        return any([count >= 5 for count in counted_hand.values()])
+    return any([count >= 5 for count in counted_hand.values()])
 
 def handToNumber(hand):
     if hasFiveOfAKind(hand):
