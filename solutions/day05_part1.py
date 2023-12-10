@@ -84,23 +84,3 @@ for seed in seeds:
 
 locations.sort()
 print(locations[0])
-
-
-## part 2 ##
-ranges = [range(a, a+b) for a,b in zip(seeds[::2], seeds[1::2])]
-part2 = sys.maxsize
-
-for one_range in ranges:
-    for seed in one_range:
-        soil = getMapped(seed2soil, seed)
-        fertilizer = getMapped(soil2fertilizer, soil)
-        water = getMapped(fertilizer2water, fertilizer)
-        light = getMapped(water2light, water)
-        temperature = getMapped(light2temperature, light)
-        humidity = getMapped(temperature2humidity, temperature)
-        location = getMapped(humidity2location, humidity)
-        
-        if location < part2:
-            part2 = location
-
-print(f'part2: {part2}')
