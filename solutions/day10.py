@@ -1,6 +1,7 @@
 from solutions.utils import readFile, padInput
 from collections import deque
 from dataclasses import dataclass
+from colorama import Fore, Back, Style
 
 @dataclass
 class Location:
@@ -22,6 +23,8 @@ if __name__ == '__main__':
     location_queue: deque[Location] = deque()
 
     start_x, start_y = findStart(lines)
+
+    flipping_char = {'|', '7', 'F'}
     
     visited_locations = set() # dict from (x,y) to distance int
     visited_locations.add((start_x, start_y))
@@ -30,6 +33,7 @@ if __name__ == '__main__':
         location_queue.append(Location((start_x,start_y-1), 1))
     if lines[start_y+1][start_x] in ('|', 'L', 'J'):
         location_queue.append(Location((start_x,start_y+1), 1))
+        flipping_char.add('S')
     if lines[start_y][start_x-1] in ('-', 'L', 'F'):
         location_queue.append(Location((start_x-1,start_y), 1))
     if lines[start_y][start_x+1] in ('-', 'J', '7'):
@@ -38,6 +42,7 @@ if __name__ == '__main__':
     part1 = 0
 
     debug_info = {}
+    debug_info[(start_x, start_y)] = 0
 
     while location_queue:
         next_loc = location_queue.popleft()
@@ -75,14 +80,25 @@ if __name__ == '__main__':
                 location_queue.append(Location((next_x, next_y+1), new_dist))
                 location_queue.append(Location((next_x+1, next_y), new_dist))
         
-    print(part1)
+    print(f'{part1=}')
 
-    # Print debug data
-    # for y, line in enumerate(lines):
-    #     for x, char in enumerate(line):
-    #         if (x,y) in debug_info:
-    #             print(debug_info[(x,y)]%10, end='')
-    #         else:
-    #             print(char, end='')
-    #     print()
+    ## Part 2
+    part2 = 0
+    for y, line in enumerate(lines):
+        inside_loop = False
+
+        for x, char in enumerate(line):
+            if (x,y) in visited_locations and char in flipping_char:
+                inside_loop = not inside_loop # flip flag
             
+            if inside_loop and (x,y) not in visited_locations:
+                part2 += 1
+                print('I', end='')
+            elif (x,y) in visited_locations:
+                print(Fore.RED +char+Style.RESET_ALL, end='')
+            else:
+                print(char, end='')
+        
+        print()
+    
+    print(f'{part2=}')
