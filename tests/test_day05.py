@@ -1,5 +1,5 @@
 import unittest
-from solutions.day05 import *
+from solutions.day05_part1 import *
 
 class Testing(unittest.TestCase):
     @classmethod
